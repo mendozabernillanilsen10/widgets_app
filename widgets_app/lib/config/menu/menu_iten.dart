@@ -27,4 +27,10 @@ const appMenuItenms = <MenuIten>[
     link: '/cards',
     icon: Icons.credit_card,
   ),
+  MenuIten(
+    title: "Progres",
+    subtitle: "Progres indicador",
+    link: '/pogresindicador',
+    icon: Icons.priority_high_rounded,
+  ),
 ];

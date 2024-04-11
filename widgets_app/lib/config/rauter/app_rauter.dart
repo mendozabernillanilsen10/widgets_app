@@ -19,5 +19,10 @@ final AppRauter = GoRouter(
       name: CardsScreen.name,
       builder: (context, state) => CardsScreen(),
     ),
+    GoRoute(
+      path: '/pogresindicador',
+      name: Pogres_screnn_dart.name,
+      builder: (context, state) => Pogres_screnn_dart(),
+    ),
   ],
 );
