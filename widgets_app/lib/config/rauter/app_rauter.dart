@@ -24,5 +24,10 @@ final AppRauter = GoRouter(
       name: Pogres_screnn_dart.name,
       builder: (context, state) => Pogres_screnn_dart(),
     ),
+    GoRoute(
+      path: '/snack',
+      name: snack_bard_screen.name,
+      builder: (context, state) => snack_bard_screen(),
+    ),
   ],
 );

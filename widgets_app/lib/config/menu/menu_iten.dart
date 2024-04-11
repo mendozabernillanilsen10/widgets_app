@@ -33,4 +33,9 @@ const appMenuItenms = <MenuIten>[
     link: '/pogresindicador',
     icon: Icons.priority_high_rounded,
   ),
+  MenuIten(
+      title: "Snack",
+      subtitle: "Snack",
+      link: '/snack',
+      icon: Icons.access_time_filled_sharp),
 ];
