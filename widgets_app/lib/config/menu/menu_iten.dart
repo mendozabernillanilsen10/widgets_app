@@ -38,4 +38,9 @@ const appMenuItenms = <MenuIten>[
       subtitle: "Snack",
       link: '/snack',
       icon: Icons.access_time_filled_sharp),
+  MenuIten(
+      title: "Animacion ",
+      subtitle: "animacion",
+      link: '/animacion',
+      icon: Icons.animation),
 ];
