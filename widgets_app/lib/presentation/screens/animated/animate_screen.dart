@@ -3,9 +3,7 @@ import 'dart:math' show Random;
 
 class AnimateScreen extends StatefulWidget {
   static const name = "AnimateScreen";
-
   const AnimateScreen({super.key});
-
   @override
   State<AnimateScreen> createState() => _AnimateScreenState();
 }
