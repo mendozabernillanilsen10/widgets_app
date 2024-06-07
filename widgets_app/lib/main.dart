@@ -8,13 +8,14 @@ void main() {
 
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
       routerConfig: AppRauter,
       title: "flutter",
       debugShowCheckedModeBanner: false,
-      theme: AppTheme(SelectcColor: 0).getTheme(),
+      theme: AppTheme(SelectcColor: 1).getTheme(),
     );
   }
 }

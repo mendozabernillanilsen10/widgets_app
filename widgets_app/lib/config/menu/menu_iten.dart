@@ -48,4 +48,9 @@ const appMenuItenms = <MenuIten>[
       subtitle: "una serie de controles de botones ",
       link: '/ui_controlers',
       icon: Icons.access_alarm_outlined),
+  MenuIten(
+      title: "intrudccion a la aplicacion ",
+      subtitle: "tutorial  a la a aplicacion a la aplicacion ",
+      link: '/app_tutorial',
+      icon: Icons.settings),
 ];
