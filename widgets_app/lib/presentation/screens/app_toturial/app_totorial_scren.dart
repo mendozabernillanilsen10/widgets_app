@@ -1,10 +1,10 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 
 class SlideInfo {
   final String title;
   final String caption;
   final String imageUrl;
-
   SlideInfo(this.title, this.caption, this.imageUrl);
 }
 
@@ -26,10 +26,38 @@ final slides = <SlideInfo>[
   ),
 ];
 
-class AppTutorialScreen extends StatelessWidget {
+class AppTutorialScreen extends StatefulWidget {
   static const name = "AppTutorialScreen";
 
   const AppTutorialScreen({Key? key}) : super(key: key);
+
+  @override
+  State<AppTutorialScreen> createState() => _AppTutorialScreenState();
+}
+
+class _AppTutorialScreenState extends State<AppTutorialScreen> {
+  late final PageController pageviewcontrollers = PageController();
+  bool llegofinal = false;
+  @override
+  void initState() {
+    super.initState();
+    pageviewcontrollers.addListener(() {
+      final page = pageviewcontrollers.page ?? 0;
+
+      if (!llegofinal && page >= (slides.length - 1.5)) {
+        setState(() {
+          llegofinal = true;
+        });
+      }
+      //  print('${pageviewcontrollers}');
+    });
+  }
+
+  @override
+  void dispose() {
+    pageviewcontrollers.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +66,7 @@ class AppTutorialScreen extends StatelessWidget {
       body: Stack(
         children: [
           PageView(
+            controller: pageviewcontrollers,
             physics: const BouncingScrollPhysics(),
             children: slides
                 .map((slideData) => _Slide(
@@ -57,7 +86,25 @@ class AppTutorialScreen extends StatelessWidget {
                 Navigator.pop(context);
               },
             ),
-          )
+          ),
+          llegofinal
+              ? Positioned(
+                  right: 20,
+                  bottom: 20,
+                  child: FadeInRight(
+                    from: 15,
+                    delay: const Duration(seconds: 1),
+                    child: FilledButton(
+                      child: Text(
+                        "Comenzar ",
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ),
+                )
+              : const SizedBox(),
         ],
       ),
     );
