@@ -53,4 +53,9 @@ const appMenuItenms = <MenuIten>[
       subtitle: "tutorial  a la a aplicacion a la aplicacion ",
       link: '/app_tutorial',
       icon: Icons.settings),
+  MenuIten(
+      title: "infinito scroll",
+      subtitle: "Infinito scroll",
+      link: '/infinito_scroll',
+      icon: Icons.access_alarm_outlined),
 ];
