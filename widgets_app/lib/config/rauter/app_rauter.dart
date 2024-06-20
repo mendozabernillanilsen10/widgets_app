@@ -46,8 +46,18 @@ final AppRauter = GoRouter(
     ),
     GoRoute(
       path: '/infinito_scroll',
-      name: Infinite_Scroll_screen.name,
-      builder: (context, state) => Infinite_Scroll_screen(),
+      name: InfiniteScrollScreen.name,
+      builder: (context, state) => InfiniteScrollScreen(),
+    ),
+    GoRoute(
+      path: '/counters',
+      name: counterScreen.name,
+      builder: (context, state) => counterScreen(),
+    ),
+    GoRoute(
+      path: '/theme',
+      name: ThemeChanseScreen.name,
+      builder: (context, state) => ThemeChanseScreen(),
     ),
   ],
 );

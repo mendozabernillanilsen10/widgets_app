@@ -58,4 +58,14 @@ const appMenuItenms = <MenuIten>[
       subtitle: "Infinito scroll",
       link: '/infinito_scroll',
       icon: Icons.access_alarm_outlined),
+  MenuIten(
+      title: "Counters",
+      subtitle: "Counters",
+      link: '/counters',
+      icon: Icons.cabin_sharp),
+  MenuIten(
+      title: "Cambiar thema",
+      subtitle: "Cambiar thmema",
+      link: '/theme',
+      icon: Icons.cabin_sharp),
 ];

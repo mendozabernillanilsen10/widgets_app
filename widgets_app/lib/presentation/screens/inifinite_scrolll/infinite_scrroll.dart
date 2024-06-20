@@ -1,20 +1,20 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-class Infinite_Scroll_screen extends StatefulWidget {
-  static const name = "Infinite_Scroll_screen";
-
-  const Infinite_Scroll_screen({super.key});
+class InfiniteScrollScreen extends StatefulWidget {
+  static const name = 'infinite_screen';
+  const InfiniteScrollScreen({super.key});
 
   @override
-  State<Infinite_Scroll_screen> createState() => _Infinite_Scroll_screenState();
+  State<InfiniteScrollScreen> createState() => _InfiniteScrollScreenState();
 }
 
-class _Infinite_Scroll_screenState extends State<Infinite_Scroll_screen> {
+class _InfiniteScrollScreenState extends State<InfiniteScrollScreen> {
   List<int> imagesIds = [1, 2, 3, 4, 5];
-
   final ScrollController scrollController = ScrollController();
   bool isLoading = false;
+  bool isMounted = true;
 
   @override
   void initState() {
@@ -23,6 +23,7 @@ class _Infinite_Scroll_screenState extends State<Infinite_Scroll_screen> {
     scrollController.addListener(() {
       if ((scrollController.position.pixels + 500) >=
           scrollController.position.maxScrollExtent) {
+        // Load next page
         loadNextPage();
       }
     });
@@ -31,8 +32,40 @@ class _Infinite_Scroll_screenState extends State<Infinite_Scroll_screen> {
   @override
   void dispose() {
     scrollController.dispose();
-    // TODO: implement dispose
+    isMounted = false;
     super.dispose();
+  }
+
+  Future loadNextPage() async {
+    if (isLoading) return;
+    isLoading = true;
+    setState(() {});
+
+    await Future.delayed(const Duration(seconds: 2));
+
+    addFiveImages();
+    isLoading = false;
+
+    if (!isMounted) return;
+
+    setState(() {});
+    moveScrollToBottom();
+  }
+
+  Future<void> onRefresh() async {
+    isLoading = true;
+    setState(() {});
+
+    await Future.delayed(const Duration(seconds: 3));
+    if (!isMounted) return;
+
+    isLoading = false;
+    final lastId = imagesIds.last;
+    imagesIds.clear();
+    imagesIds.add(lastId + 1);
+    addFiveImages();
+
+    setState(() {});
   }
 
   void moveScrollToBottom() {
@@ -46,23 +79,8 @@ class _Infinite_Scroll_screenState extends State<Infinite_Scroll_screen> {
 
   void addFiveImages() {
     final lastId = imagesIds.last;
+
     imagesIds.addAll([1, 2, 3, 4, 5].map((e) => lastId + e));
-  }
-
-  Future loadNextPage() async {
-    if (isLoading) return;
-    isLoading = true;
-    setState(() {});
-
-    await Future.delayed(const Duration(seconds: 2));
-
-    addFiveImages();
-    isLoading = false;
-
-    if (!isLoading) return;
-
-    setState(() {});
-    moveScrollToBottom();
   }
 
   @override
@@ -72,25 +90,34 @@ class _Infinite_Scroll_screenState extends State<Infinite_Scroll_screen> {
       body: MediaQuery.removePadding(
         context: context,
         removeTop: true,
-        child: ListView.builder(
-          controller: scrollController,
-          itemCount: imagesIds.length,
-          itemBuilder: (context, index) {
-            return FadeInImage(
-              fit: BoxFit.cover,
-              width: double.infinity,
-              height: 200,
-              placeholder: AssetImage("assets/images/jar-loading.gif"),
-              image: NetworkImage(
-                  "https://picsum.photos/id/${imagesIds[index]}/500/300"),
-            );
-          },
+        removeBottom: true,
+        child: RefreshIndicator(
+          onRefresh: onRefresh,
+          edgeOffset: 10,
+          strokeWidth: 2,
+          child: ListView.builder(
+            controller: scrollController,
+            itemCount: imagesIds.length,
+            itemBuilder: (context, index) {
+              return FadeInImage(
+                fit: BoxFit.cover,
+                width: double.infinity,
+                height: 300,
+                placeholder: const AssetImage('assets/images/jar-loading.gif'),
+                image: NetworkImage(
+                    'https://picsum.photos/id/${imagesIds[index]}/500/300'),
+              );
+            },
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => context.pop(),
-        tooltip: 'Increment',
-        child: Icon(Icons.read_more),
+        // child: const Icon(Icons.arrow_back_ios_new_outlined),
+        child: isLoading
+            ? SpinPerfect(
+                infinite: true, child: const Icon(Icons.refresh_rounded))
+            : FadeIn(child: const Icon(Icons.arrow_back_ios_new_outlined)),
       ),
     );
   }

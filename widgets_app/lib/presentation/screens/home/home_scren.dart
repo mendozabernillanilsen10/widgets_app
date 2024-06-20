@@ -2,17 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:widgets_app/config/menu/menu_iten.dart';
 import 'package:widgets_app/presentation/screens/cards/cads_escreens.dart';
+import 'package:widgets_app/presentation/widgets/drawers/side_menu.dart';
 
 class HomeScren extends StatelessWidget {
   static const String name = 'home_screen';
   const HomeScren({super.key});
   @override
   Widget build(BuildContext context) {
+    final scaffoidKey = GlobalKey<ScaffoldState>();
     return Scaffold(
+      key: scaffoidKey,
       appBar: AppBar(
         title: Text('FLUTTER + MATERIAL 3'),
       ),
       body: _homeView(),
+      drawer: SideMenu(
+        scaffoidKey: scaffoidKey,
+      ),
     );
   }
 }
