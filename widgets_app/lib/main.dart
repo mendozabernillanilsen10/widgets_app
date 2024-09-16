@@ -19,7 +19,7 @@ class MainApp extends ConsumerWidget {
 
     return MaterialApp.router(
       routerConfig: AppRauter,
-      title: "flutter",
+      title: "hola mundo",
       debugShowCheckedModeBanner: false,
       theme: apptheme.getTheme(),
     );
